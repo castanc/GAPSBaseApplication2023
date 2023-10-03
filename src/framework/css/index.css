@@ -1,0 +1,151 @@
+.red {
+    color: red;
+    text-decoration: solid;
+  }
+
+  h1 {
+    font-weight: 300;
+    font-size: 3.5em;
+  }
+
+  h2 {
+    font-weight: 300;
+    font-size: 2.5em;
+  }
+  
+  p {
+    font-family: sans-serif;
+    font-weight: 300;
+    line-height: 1.42;
+  }
+
+  .titulo {
+    font-size: 1.5em;
+  }
+
+  .sub-titulo {
+    font-size: 0.5em;
+  }
+
+
+  i {
+    font-size: 4em;
+    margin-right: 0.3em;
+    cursor: pointer;
+  }
+
+  .numeric {
+    text-align: right;
+  }
+
+  .messages {
+    margin-top: 5px;
+    padding: 5px 5px;
+  }
+
+  .row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    padding-bottom: var(--hGap);
+  }
+
+  .cell50 {
+    width: 50%;
+  }
+
+  .cell40 {
+    width: 40%;
+  }
+
+
+  .cell20 {
+    width: 20%;
+  }
+
+  .cell25 {
+    width: 25%;
+  }
+
+  .cell80 {
+    width: 80%;
+  }
+
+  .cell90 {
+    width: 90%;
+  }
+
+  .cell100 {
+    width: 100%;
+  }
+
+  .cell30 {
+    width: 30%;
+    text-align: left;
+  }
+
+  .cell60 {
+    width: 60%;
+  }
+
+  .cell70 {
+    width: 70%;
+  }
+
+
+  .cell90 {
+    width: 90%;
+  }
+
+  .cell10 {
+    width: 10%;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .visible {
+    display: block;
+  }
+
+  .bigfont {
+    font-size: 2em;
+  }
+
+  textarea input[type="text"]{
+    margin-bottom: 15px;
+    padding:10px;
+    text-transform: uppercase;
+  }
+
+  .forma {
+    display:block;
+    font-size: 3em;
+  }
+
+  .forma, label {
+    font-size: 1.5em;
+  }
+
+  .reservado {
+    display: block;
+    background-color: darkgoldenrod
+  }
+
+  .disponible {
+    display: block;
+    background-color: darkseagreen;
+  }
+
+  .standarad-font-size {
+    font-size: var(--fsBase);
+  }
+
+  #divMessages
+  {
+    font-size: 1.5em;
+  }

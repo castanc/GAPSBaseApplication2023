@@ -1,0 +1,44 @@
+.button__badge {
+    background-color: #fa3e3e;
+    border-radius: 2px;
+    color: white;
+
+    padding: 1px 3px;
+    font-size: 10px;
+
+    position: absolute;
+    /* Position the badge within the relatively positioned button */
+    top: 0;
+    right: 0;
+  }
+  
+  .badge {
+      background-color: green;
+      color: #fff;
+      display: inline-block;
+      padding-left: 8px;
+      padding-right: 8px;
+      border-radius: 50%;
+      position: relative;
+      top: 5;
+      font-family: sans-serif;
+      left: 5;
+      font-size: 0.8em;
+  }
+
+
+
+  .red-badge {
+    background-color: red;
+    color: #fff;
+    display: inline-block;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 50%;
+    position: relative;
+    top: 5;
+    font-family: sans-serif;
+    left: 5;
+    font-size: 0.8em;
+}
+
