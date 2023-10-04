@@ -16,6 +16,11 @@ function logDebug(line) {
 
 function logDebug(func,obj) {
 	console.log(func,obj);
+	infoMessage(`${func}() ${JSON.stringify(obj)}`);
+}
+
+function logFuncDebug(func,obj) {
+	console.log(func,obj);
 }
 
 

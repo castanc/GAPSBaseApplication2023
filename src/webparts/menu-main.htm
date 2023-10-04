@@ -1,0 +1,20 @@
+<div id="divMainMenu">
+    <div class="row">
+        <i id="iconHome" class="fa fa-home" onclick="home()" title="Inicio"></i>
+        <i id="iconUpload" class="" onclick="showUploadFiles()" title="Inicio"></i>
+        <i id="iconFolder" class="fa fa-folder" onclick="selectFiles()" title="Inicio"></i>
+        <i id="iconEdit" class="fas fa-edit" onclick="editStage()" title="Input Data"></i>
+        <i id="iconUser" class="fa fa-user" onclick="toggleUserView()" title="Ver Cliente"></i>
+        <i id="iconInfo" class="fa fa-info-circle" onclick="toggleSystemInfo()" title="Configuracion"></i>
+        <i id="iconSettings" class="fa fa-cog" onclick="toggleSettings()" title="Configuracion"></i>
+        <i id="iconDebug" class="fa fa-bug" onclick="toggleDebug()" title="Debug"></i>
+        <i id="iconDeleteAll" class="fa fa-trash" onclick="deleteAll()" title="Delete ALL"></i>
+
+        <div id="divSearch" class="hidden">
+            <input class="cell40 bigfont" type="text" id="fldsearch" onchange="preSearch(this.value)">
+            <i id="iconReset" class="fa fa-close" onclick="buildThumbNailsMenu2()" title="Resert Buscar"></i>
+            <i id="iconSearch" class="fa fa-search" onclick="search()" title="Buscar"><span id="badgeBuscar"
+                    class="badge">0</span></i>
+        </div>
+    </div>
+</div>

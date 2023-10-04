@@ -8,20 +8,33 @@ function showControl(ctl, scrollToTop = true) {
 }
 
 
-function hideControl(ctl, scrollToTop = true) {
+function hideControl(ctl) {
 	let control = document.getElementById(ctl);
 	if (control) {
 		control.style.display = "none";
-		if (scrollToTop == true)
-			control.scrollIntoView(true);
 	}
 }
 
+
+function getChecked(val)
+{
+	if ( val) return `checked`;
+	return "";
+}
 
 function protectField(fldId, val = true) {
 	let ctl = document.getElementById(fldId)
 	if (ctl)
 		ctl.disabled = val;
+}
+
+function scrollTo(ctlId)
+{
+	let control = document.getElementById(ctlId);
+	if (control) {
+			control.scrollIntoView(true);
+	}
+
 }
 
 function writeInnerHTML(divId, html) {
@@ -66,6 +79,11 @@ function validateCutPaste(action) {
 
 function toggleUserView() {
 
+}
+
+function dateString(dt)
+{
+	return `${dt.getFullYear()}/${dt.getMonth()}/${dt.getDate()}`;
 }
 
 

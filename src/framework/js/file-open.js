@@ -181,7 +181,7 @@ const openFileOrFiles = async (extensions,multiple = false) => {
 				return function (e) {
     			selFile.data = e.target.result;
           fileInfos.push(selFile);
-          croppedImage =  cropImage(selFile.data,240,240);
+          croppedImage =  cropImage(selFile.data,540,540);
 
 				};
 			})(file);

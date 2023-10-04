@@ -1,3 +1,6 @@
+const thumbWidth = 240;
+const thumbHeight = 240;
+
 function showCards(files, filter = "") {
     showControl(DIV_OPTIONS);
     showControl(DIV_CARDS);
@@ -35,27 +38,41 @@ function showCards(files, filter = "") {
     let topbtn = `<i class="fa fa-home" onclick="showControl('top')" title="Inicio"></i>`;
     let btnEdit = `<i class="fas fa-edit" onclick="editDocument(${p.Order})" title="Edit"></i>`;
     let btnBack = ""; //`<i class="fas fa-arrow-alt-circle-left" onclick="closeQueryReservas()" title="Continuar Reservas"></i>`;;
+
+    let imgHtml= `<img src="${baseUrl1}${p.Id}" width="${thumbWidth}px" height="${thumbHeight}px">`;
+    let imgLink = `<a href="${baseUrl2}${p.Id}" target="blank">${imgHtml}</a>`;
+    let confirm = `    <label class="containerchb">Delete
+  <input type="checkbox" ${getChecked(p.Delete)}">
+  <span class="checkmark"></span>
+</label>
+`;
+
+// confirm = `<div class="checkbox-container">
+//   <input type="checkbox" id="cb${p.Order}" ${getChecked(p.Delete)}>
+//   <label for="cb1">Delete</label>
+// </div>`;
+
   
   
     let megas = getMB(p.Size);
+    let name = ""; //p.FIleName
     
     card = `
       <hr>
           <li class="card" id="card_${p.Order}">
               <div class="card__content">
                   <div>
-                      <div class="titulo"><b> ${p.FileName}</b></div>
-                      <p class="sub-tiulo">${megas} ${dimensions}</p>
-                    <h3>${new Date(p.DateLastAccess)}</h3>
+                      <div class="titulo"><b> ${name}</b></div>
+                      <p class="sub-tiulo">${megas}; ${confirm}</p>
+                    <h3>${dateString(new Date(p.DateLastAccess))}</h3>
             <div class="row">
-              ${topbtn}${btnBack}${btnEdit}
+              ${btnEdit}
             </div>
-            <div id="msg_${p.RowId}"" class="row">
+            <div id="msg_${p.RowId}" class="row">
             </div>
                   </div>
                   <figure>
-                    ${p.LinkHtml}
-                    ${p.ImgThumbnail}
+                  ${imgLink}
                   </figure>
               </div>
           </li>

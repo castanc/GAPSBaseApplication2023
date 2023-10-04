@@ -14,50 +14,24 @@
 </head>
 
 <body>
-    <main>
-        <h1>App</h1>
+    <main id="top">
+        <div id="divWelcome">
+            <h1>App</h1>
+            <h3 id="version">$version</h3>
+        </div>
+
         <div id="divMessages" class="row"></div>
-        <h3 id="version">$version</h3>
-
-        <div id="divMainMenu">
-            <div class="row">
-                <i id="iconHome" class="fa fa-home" onclick="home()" title="Inicio"></i>
-                <i id="iconUpload" class="" onclick="showUploadFiles()" title="Inicio"></i>
-                <i id="iconFolder" class="fa fa-folder" onclick="selectFiles()" title="Inicio"></i>
-                <i id="iconUser" class="fa fa-user" onclick="toggleUserView()" title="Ver Cliente"></i>
-                <i id="iconInfo" class="fa fa-info-circle" onclick="toggleSystemInfo()" title="Configuracion"></i>
-                <i id="iconSettings" class="fa fa-cog" onclick="toggleSettings()" title="Configuracion"></i>
-                <i id="iconDebug" class="fa fa-bug" onclick="toggleDebug()" title="Debug"></i>
-                <i id="iconDeleteAll" class="fa fa-trash" onclick="deleteAll()" title="Delete ALL"></i>
-
-                <div id="divSearch" class="hidden">
-                    <input class="cell40 bigfont" type="text" id="fldsearch" onchange="preSearch(this.value)">
-                    <i id="iconReset" class="fa fa-close" onclick="buildThumbNailsMenu2()" title="Resert Buscar"></i>
-                    <i id="iconSearch" class="fa fa-search" onclick="search()" title="Buscar"><span id="badgeBuscar"
-                            class="badge">0</span></i>
-                </div>
-            </div>
-
-
-        </div>
-        <div id="divOptions" class="hidden">
-            <div class="row">
-                <label for="fldOptions">Options</label>
-                <select id="fldOptions">
-                    <option value="A">Auto Scan</option>
-                    <option value="M">Manual Input</option>
-                </select>
-            </div>
-        </div>
+        <!--$menu-main.htm-->
 
         <div id="divThumbnail"></div>
         <div id="divImage"></div>
 
         <div id="divCards" class="hidden">
-            
-        </div>
 
+        </div>
     </main>
+    <div id="divEditMobile"></div>
+    <!--$edit-document.htm-->
 </body>
 
 </html>

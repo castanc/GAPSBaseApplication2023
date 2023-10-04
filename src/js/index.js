@@ -1,6 +1,11 @@
 var stage = [];
 var sheet = {};
 var baseUrl = "https://drive.google.com/file/d/";
+const baseUrl1 = "https:" + "/" + "/" + "drive.google.com/uc?export=view&id=";
+const baseUrl2 = "https:" + "/" + "/" + "drive.google.com/file/d/";
+let ixDoc = 1;
+//https://drive.google.com/uc?id=19V4vTvoFlrjvPs6oQIrZ7yYecdoYl3rD&export=download
+//https://drive.google.com/file/d/19EMhlBFlxPiOqtSjvMJqx0AltPAlwI2p/view?usp=drivesdk
 
 
 
@@ -42,10 +47,6 @@ function saveData(key, result) {
     localStorage.setItem(key, result);
 }
 
-const baseurl1 = "https:" + "/" + "/" + "drive.google.com/uc?export=view&id=";
-const baseUrl2 = "https:" + "/" + "/" + "drive.google.com/file/d/";
-//https://drive.google.com/uc?id=19V4vTvoFlrjvPs6oQIrZ7yYecdoYl3rD&export=download
-//https://drive.google.com/file/d/19EMhlBFlxPiOqtSjvMJqx0AltPAlwI2p/view?usp=drivesdk
 
 
 function loadData(result) {
@@ -60,21 +61,12 @@ function loadData(result) {
         o[ro.Content[0][j]] = ro.Content[i][j];
       }
       o.Status = "";
+      o.Order = i;
       o.IsImage = getFileType(o.Ext) == "IMAGE";
       o.IsPDF = getFileType(o.Ext) == "PDF";
       o.IsText = getFileType(o.Ext) == "TEXT";
-      o.Url = `${o.ViewUrl}`;
-      o.ThumbnailData = "";
-      o.ImgHtml = `<img src="${o.ViewUrl}" width="120">`;
-      o.LinkHtml = `<a href="${o.ViewUrl}" target="blank">${o.Order}.</a>`;
-
-
-      o.ImgLink = `${baseUrl2}${o.Id}/view`;
-      o.ImgThumbnail = `<img src="${o.ThumbNailUrl}" width="120px">`;
-      o.ImgHtml = `<img src="${baseurl1}${o.Id}" width="120px">`;
-      o.LinkHtml = `<a href="${o.ImgLink}" target="blank">View File</a>`;
-
-
+      o.Delete = false;
+      logFuncDebug(loadData.name,o);
       stage.push(o);
     }
   }
@@ -83,20 +75,45 @@ function loadData(result) {
     logDebug(ro);
   }
   saveData("stage-objects", JSON.stringify(stage));
-  createThumbNails(stage);
-  showCards(stage);
+  hideControl(DIV_WELCOME);
+  ixDoc = 1;
+  editStage();
 }
 
-function createThumbNails(pics) {
+function editStage(){
+  if (!mobile)
+    showCards(stage);
+  else
+  {
+    dataVisible = true;
+    editDocument(ixDoc);
+  }
+
+}
+
+function createThumbNails() {
   thumbNails = [];
-  pics.every(p => {
-    if (p.IsImage) {
-      currentIx = p.Order;
-      getImages(p.ImgLink);
-      if (location.protocol != K_HTTPS)
-        return false;
+
+  for(let i=0; i< stage.length;i++)
+  {
+    console.log(createThumbNails.name,i,stage[i]);
+    if (stage[i].IsImage) {
+      currentIx = stage[i].Order;
+      getImages(stage[i].ImgLink);
     }
-  });
+    else console.log("p is not image");
+
+  }
+  // pics.every(p => {
+  //   console.log(createThumbNails.name,p);
+  //   if (p.IsImage) {
+  //     currentIx = p.Order;
+  //     getImages(p.ImgLink);
+  //     if (location.protocol != K_HTTPS)
+  //       return false;
+  //   }
+  // });
+  saveData("resolved-thumbnails",JSON.stringify(stage));
 }
 
 

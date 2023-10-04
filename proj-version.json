@@ -1,13 +1,13 @@
 {
   "Major": 1,
   "Minor": 0,
-  "Build": 1,
-  "BuildDate": "2023-10-03T11:11:31.509669-03:00",
+  "Build": 113,
+  "BuildDate": "2023-10-04T13:20:32.4004611-03:00",
   "AppName": "BaseApplication2",
-  "SourcePath": "P:\\MainApps\\BaseApplication2\\VSN-0.0",
-  "FrameworkPath": "P:\\MainApps\\BaseApplication2\\VSN-0.0\\src\\framework",
+  "SourcePath": "P:\\MainApps\\BaseApplication2\\VSN-1.0",
+  "FrameworkPath": "P:\\MainApps\\BaseApplication2\\VSN-1.0\\src\\framework",
   "UseFramework": false,
   "RootPath": "P:",
   "IsLauncher": false,
-  "VersionString": "VSN-1.0.1"
+  "VersionString": "VSN-1.0.113"
 }

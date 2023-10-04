@@ -1,0 +1,4 @@
+function buildMobileUI()
+{
+    editDocument(ixDoc);
+}

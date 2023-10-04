@@ -5,12 +5,12 @@
 
   h1 {
     font-weight: 300;
-    font-size: 3.5em;
+    font-size: 2em;
   }
 
   h2 {
     font-weight: 300;
-    font-size: 2.5em;
+    font-size: 1.5em;
   }
   
   p {
@@ -29,7 +29,7 @@
 
 
   i {
-    font-size: 4em;
+    font-size: 2em;
     margin-right: 0.3em;
     cursor: pointer;
   }
@@ -55,38 +55,50 @@
 
   .cell50 {
     width: 50%;
+    display: block;
   }
 
   .cell40 {
     width: 40%;
+    display: block;
+  }
+
+  .cell45 {
+    width: 45%;
+    display: block;
   }
 
 
   .cell20 {
     width: 20%;
+    display: block;
   }
 
   .cell25 {
     width: 25%;
+    display: block;
   }
 
   .cell80 {
     width: 80%;
+    display: block;
   }
 
   .cell90 {
     width: 90%;
+    display: block;
   }
 
   .cell100 {
     width: 100%;
+    display: block;
   }
 
   .cell30 {
     width: 30%;
     text-align: left;
   }
-
+a
   .cell60 {
     width: 60%;
   }
@@ -96,10 +108,7 @@
   }
 
 
-  .cell90 {
-    width: 90%;
-  }
-
+  
   .cell10 {
     width: 10%;
   }
@@ -124,11 +133,11 @@
 
   .forma {
     display:block;
-    font-size: 3em;
+    font-size: 2em;
   }
 
   .forma, label {
-    font-size: 1.5em;
+    font-size: 0.5em;
   }
 
   .reservado {

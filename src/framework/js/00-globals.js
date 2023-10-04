@@ -10,7 +10,14 @@ const DIV_MONEDAS = "dviMonedas";
 const DIV_IMAGE = "divImage";
 const DIV_SYSTEM_INFO = "divSystemInfo";
 const SPINNER = "spinner";
-
+const TOP = "top";
+const DIV_EDIT_DOCUMENT = "divEditDocument";
+const FORM_EDIT_DOCUMENT = "frmEditDocument";
+const DIV_IMAGE_EDIT = "divImageEdit";
+const DIV_WELCOME = "divWelcome";
+const DIV_EDIT_OPTIONS = "divEditOptions";
+const DIV_EDIT_MOBILE = "divEditMobile";
+const DIV_EDIT_DATA = "divEditData";
 
 
 const FLD_OPTIONS = "fldOptions";

@@ -23,7 +23,7 @@ function downloadStageFiles() {
 
 
 function getImages(url) {
-    logDebug(getImages.name, url);
+    logFuncDebug(getImages.name, url);
     if (location.protocol == K_HTTPS) {
         google.script.run.withSuccessHandler(downloadedImage).withFailureHandler(failureCall).getBlob(url);
     }
@@ -36,7 +36,7 @@ function getImages(url) {
 
 
 function downloadedImage(result) {
-    saveData("image", result);
+    //saveData("image", result);
     //base64Image = `data:image/${stage[currentIx].Ext};base64,${window.btoa(blobImage)}`;
     let bext = stage[currentIx].Ext;
     if (bext == "jpg") bext = "jpeg";
@@ -45,8 +45,8 @@ function downloadedImage(result) {
         logDebug("base64 image", base64Image);
         //croppedImage = cropImage(base64Image,cropWidth,cropHeight);
         //stage[currentIx].ThumbNailData = croppedImage;
-        stage[currentIx].ImgThumbnail = `<img src="${croppedImage}" width="${cropWidth}px" alt="Recargue página para ver las imágemes">`;
-        logDebug("ImgThumbnail:", stage[currentIx].ImgThumbnail);
+        stage[currentIx].ImgThumbnail = `<img src="${base64Image}" width="540px" heogjt="540px">`;
+        logFuncDebug(downloadedImage.name, stage[currentIx].ImgThumbnail);
     }
 
 }
