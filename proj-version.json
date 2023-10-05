@@ -1,17 +1,17 @@
 {
   "Major": 1,
   "Minor": 0,
-  "Release": 4,
+  "Release": 5,
   "Build": 0,
   "BuildDate": "0001-01-01T00:00:00",
   "AppName": "BaseApplication2",
-  "SourcePath": "P:\\MainApps\\BaseApplication2\\VSN-1.0.4",
+  "SourcePath": "P:\\MainApps\\BaseApplication2\\VSN-1.0.5",
   "PrimaryPath": "P:\\MainApps\\BaseApplication2",
   "FrameworkPath": "P:\\MainApps\\BaseApplication2\\VSN-1.0.3\\src\\framework",
   "UseFramework": false,
   "RootPath": "P:",
   "IsLauncher": false,
   "BackupFolder": "P:\\Backups",
-  "FullVersionString": "VSN-1.0.4.0",
-  "ReleaseString": "VSN-1.0.4"
+  "FullVersionString": "VSN-1.0.5.0",
+  "ReleaseString": "VSN-1.0.5"
 }
