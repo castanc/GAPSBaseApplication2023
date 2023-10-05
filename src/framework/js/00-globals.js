@@ -22,9 +22,11 @@ const DIV_EDIT_DATA = "divEditData";
 
 const FLD_OPTIONS = "fldOptions";
 const FLD_DESTINO = "fldDestino";
-const FLD_BENEFICIARIOS = "fldBeneficiarios";
-const FLD_MONEDAS = "fldMonedas";
+const FLD_BENEFICIARIOS = "fldBeneficiario";
+const FLD_MONEDAS = "fldMoney";
 const FLD_OCRTEXT = "fldOCRText";
+
+
 
 const K_HTTPS = "https:";
 const K_BASE64 = "base64";

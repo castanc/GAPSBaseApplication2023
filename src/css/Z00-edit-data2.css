@@ -16,6 +16,8 @@
   .form-group input[type="date"],
   .form-group input[type="time"],
   .form-group input[type="number"],
+  .form-group select,
+  .form-group img,
   .form-group textarea {
     width: 100%;
     padding: 10px;
@@ -38,7 +40,7 @@
   }
 
   .btnSec {
-    background-color: #cccccc;
+    background-color: grey;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -47,6 +49,10 @@
   }
 
 
+
+  .ricon {
+    text-align: right;
+  }
 
   .btnForm:hover {
     background-color: #45a049;

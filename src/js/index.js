@@ -80,6 +80,16 @@ function loadData(result) {
   editStage();
 }
 
+function deletePic(order)
+{
+  let p = stage.filter(x=>x.Order == order);
+  if ( p.length > 0 )
+  {
+    p.Delete = !p.Delete;
+  }
+}
+
+
 function editStage(){
   if (!mobile)
     showCards(stage);

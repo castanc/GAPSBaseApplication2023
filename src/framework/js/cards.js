@@ -42,7 +42,7 @@ function showCards(files, filter = "") {
     let imgHtml= `<img src="${baseUrl1}${p.Id}" width="${thumbWidth}px" height="${thumbHeight}px">`;
     let imgLink = `<a href="${baseUrl2}${p.Id}" target="blank">${imgHtml}</a>`;
     let confirm = `    <label class="containerchb">Delete
-  <input type="checkbox" ${getChecked(p.Delete)}">
+  <input type="checkbox" ${getChecked(p.Delete)}" onchange="deletePic(${p.Order})">
   <span class="checkmark"></span>
 </label>
 `;

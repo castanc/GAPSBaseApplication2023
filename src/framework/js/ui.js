@@ -16,9 +16,8 @@ function hideControl(ctl) {
 }
 
 
-function getChecked(val)
-{
-	if ( val) return `checked`;
+function getChecked(val) {
+	if (val) return `checked`;
 	return "";
 }
 
@@ -28,11 +27,31 @@ function protectField(fldId, val = true) {
 		ctl.disabled = val;
 }
 
-function scrollTo(ctlId)
+
+//https://gomakethings.com/how-to-get-and-set-a-date-object-from-an-input-with-vanilla-javascript/
+function setDateValue(ctl, dt) {
+	let field = document.getElementById(ctl);
+	if (ctl) {
+		ctl.valueAsDate = dt;
+	}
+}
+
+
+function setValue(ctl,val)
 {
+	let field = document.getElementById(ctl);
+	if ( field )
+	{
+		field.value = val;
+	}
+	return null;
+}
+
+
+function scrollTo(ctlId) {
 	let control = document.getElementById(ctlId);
 	if (control) {
-			control.scrollIntoView(true);
+		control.scrollIntoView(true);
 	}
 
 }
@@ -77,12 +96,26 @@ function validateCutPaste(action) {
 
 }
 
+function addClass(ctl,className)
+{
+	let field = document.getElementById(ctl);
+	if ( field)
+		field.addClass(className);
+}
+
+function removeClass(ctl, className){
+	let field = document.getElementById(ctl);
+	if ( field)
+		field.removeClass(className);
+
+}
+
+
 function toggleUserView() {
 
 }
 
-function dateString(dt)
-{
+function dateString(dt) {
 	return `${dt.getFullYear()}/${dt.getMonth()}/${dt.getDate()}`;
 }
 
