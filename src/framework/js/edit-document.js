@@ -34,7 +34,7 @@ function loadLocalFile(fi) {
         buildSelector();
         editStage();
     }
-
+    infoMessage(`Loading local file ${p.Order}/${stage.length}`);
 
 
 }
