@@ -39,8 +39,22 @@ function showCards(files, filter = "") {
     let btnEdit = `<i class="fas fa-edit" onclick="editDocument(${p.Order})" title="Edit"></i>`;
     let btnBack = ""; //`<i class="fas fa-arrow-alt-circle-left" onclick="closeQueryReservas()" title="Continuar Reservas"></i>`;;
 
-    let imgHtml= `<img src="${baseUrl1}${p.Id}" width="${thumbWidth}px" height="${thumbHeight}px">`;
-    let imgLink = `<a href="${baseUrl2}${p.Id}" target="blank">${imgHtml}</a>`;
+    let imgHtml = "";
+    let imgLink = "";
+    if ( p.IsImage && p.Source == SOURCE_GDRIVE)
+    {
+      imgHtml= `<img src="${baseUrl1}${p.Id}" width="${thumbWidth}px" height="${thumbHeight}px">`;
+      imgLink = `<a href="${baseUrl2}${p.Id}" target="blank">${imgHtml}</a>`;
+    }
+    else if ( p.IsImage && p.Source == SOURCE_LOCAL)
+    {
+      imgHtml= `<img src="${p.Base64Data}" width="${thumbWidth}px" height="${thumbHeight}px">`;
+      imgLink = `<a href="${p.Base64Data}" target="blank">${imgHtml}</a>`;
+    }
+
+      console.log(imgHtml,p);
+    
+    
     let confirm = `    <label class="containerchb">Delete
   <input type="checkbox" ${getChecked(p.Delete)}">
   <span class="checkmark"></span>

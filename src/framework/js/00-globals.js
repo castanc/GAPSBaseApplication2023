@@ -18,6 +18,8 @@ const DIV_WELCOME = "divWelcome";
 const DIV_EDIT_OPTIONS = "divEditOptions";
 const DIV_EDIT_MOBILE = "divEditMobile";
 const DIV_EDIT_DATA = "divEditData";
+const SOURCE_GDRIVE = "GD";
+const SOURCE_LOCAL = "L";
 
 
 const FLD_OPTIONS = "fldOptions";
@@ -28,7 +30,7 @@ const FLD_OCRTEXT = "fldOCRText";
 const FLD_SELECTOR = "fldSelector";
 
 const K_HTTPS = "https:";
-const K_BASE64 = "base64";
+const K_BASE64 = "base64,";
 const ICON_DEBUG = "iconDebug";
 const ICON_HOME = "iconHome";
 

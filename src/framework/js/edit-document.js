@@ -4,6 +4,40 @@ let doc = {};
 let page = 0;
 
 
+function loadLocalFile(fi) {
+    let o = {};
+    o.Order = stage.length + 1;
+    o.FileName = fi.Name;
+    o.Ext = "";
+    let ix = o.FileName.lastIndexOf(".");
+    if (ix > 0) {
+        o.FileName = o.FileName.substring(0, ix);
+        o.Ext = o.FileName.substring(ix + 1);
+    }
+    o.DateLastAccess = fi.LastModified;
+    o.DateCreated = fi.LastModified;
+    o.Size = fi.Size;
+    o.Status = "";
+    o.Delete = false;
+    o.Type = fi.Type;
+    o.IsImage = fi.IsImage;
+    o.IsPDF = fi.IsPDF;
+    o.IsText = fi.IsText;
+    o.Delete = false;
+    o.Base64Data = fi.Base64Data;
+    o.Source = "L";
+    stage.push(o);
+
+    if (stage.length >= filesLoaded) {
+        hideControl(DIV_WELCOME);
+        ixDoc = 1;
+        buildSelector();
+        editStage();
+    }
+
+
+
+}
 function loadData(result) {
     saveData(K_LOCAL_DOWNLOADDATA, result);
     let ro = JSON.parse(result);
@@ -23,6 +57,8 @@ function loadData(result) {
             o.IsPDF = getFileType(o.Ext) == "PDF";
             o.IsText = getFileType(o.Ext) == "TEXT";
             o.Delete = false;
+            o.Base64Data = "";
+            o.Source = "GD";
             logFuncDebug(loadData.name, o);
             stage.push(o);
         }
@@ -100,20 +136,38 @@ function getDoc(p) {
     let docArr = docs.filter(x => x.Order == p.Oder);
     if (docArr.length == 0) {
         doc = {};
+        doc.Id = p.Id;
+        doc.Base64Data = p.Base64Data;
+        doc.Order = p.Order;
+        doc.Reference = "";
+        doc.Details = "";
+        doc.KeyValuePairData = "";
+        doc.RawOcrData = "";
+        doc.DocType = "";
+        doc.Origin = "";
+        doc.Target = "";
+        doc.Money = "";
+        doc.Profile = "";
+        doc.value = 0;
         doc.FileName = p.FileName;
         doc.Ext = p.Ext;
         doc.Size = p.Size;
-        doc.DateCreated = p.DateCreated;
-        doc.DateLastAccess = p.DateLastAccess;
-        doc.Id = p.Id;
-        doc.Order = p.Order;
-
-        fields = "Reference,Details,KeyValuePairData,RawOcrData,DocType,Source,Target,Money,Profile".split(',');
-        for (let i = 0; i < fields.length; i++) {
-            doc[fields[i]] = "";
+        doc.Source = p.Source;
+        doc.IsImage = p.IsImage;
+        doc.IsPDF = p.isPDF;
+        doc.IsText = p.IsText;
+        if (doc.Source == SOURCE_GDRIVE) {
+            doc.DateCreated = p.DateCreated;
+            doc.DateLastAccess = p.DateLastAccess;
         }
-        doc.value = 0;
+        else {
+            doc.DateCreated = new Date(p.DateCreated);
+            doc.DateLastAccess = new Date(p.DateLastAccess);
+
+        }
         docs.push(doc);
+        console.log("getDoc()",p);
+        console.log(doc);
         return doc;
     }
     return docArr[0];
@@ -189,6 +243,7 @@ function editDocument(order) {
     console.log(p);
     if (p.length > 0) {
         doc = getDoc(p[0]);
+        console.log("doc",doc);
         setData(doc);
         hideControl(DIV_OPTIONS);
         hideControl(DIV_MAIN_MENU);
@@ -196,14 +251,13 @@ function editDocument(order) {
         showControl(DIV_EDIT_DOCUMENT);
         //let imgHtml = `<img src="${baseUrl1}${p[0].Id}" width="540px">`;
         let htmlFile = "";
-        if (p.IsImage) {
-            htmlFile = `<img src="${baseUrl1}${p[0].Id}" onclick="viewNext()" ondoubhleclick="viewPrev()">`;
-            logDebug(editDocument.name, imgHtml);
+        if (doc.IsImage && doc.Source == SOURCE_GDRIVE) {
+            htmlFile = `<img src="${baseUrl1}${doc.Id}" onclick="viewNext()" ondoubhleclick="viewPrev()">`;
         }
-        else
-        {
-            htmlFile = `<p>${p.FileName}</p>`
+        else if (doc.IsImage && doc.Source == SOURCE_LOCAL) {
+            htmlFile = `<img src="${doc.Base64Data}" onclick="viewNext()" ondoubhleclick="viewPrev()">`;
         }
+        else htmlFile = `<p>${doc.FileName}</p>`;
         writeInnerHTML(DIV_IMAGE_EDIT, htmlFile);
         if (doc.Delete) {
             showControl("iconDeleted");

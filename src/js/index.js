@@ -18,20 +18,6 @@ function home()
 }
 
 
-function selectFiles() {
-
-  let promise = openFileOrFiles(".jpg,.jpeg,.png,.bmp,.txt,.pdf", false);
-
-  promise.then(
-    function (files) {
-      paintThumbnail(files);
-    },
-    function (error) {
-      console.log("error", error)
-    }
-  );
-}
-
 
 function paintThumbnail(file)
 {

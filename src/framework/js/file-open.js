@@ -1,8 +1,10 @@
 //https://web.dev/patterns/files/open-one-or-multiple-files/
+let filesLoaded = 0;
 
 const openFileOrFiles = async (extensions,multiple = false) => {
     // Feature detection. The API needs to be supported
     // and the app not run in an iframe.
+    filesLoaded = 0;
     const supportsFileSystemAccess =
       "showOpenFilePicker" in window &&
       (() => {
@@ -77,8 +79,9 @@ const openFileOrFiles = async (extensions,multiple = false) => {
   //todo: convert to Promise
   function loadFiles(files) {
 		fileMode = "Binary";
-    fileInfos = [];
-    //readBase64 = true;
+    let fileInfos = [];
+    readBase64 = true;
+    filesLoaded = files.length;
 
 		// Loop through the FileList and render image files as thumbnails.
 		//for (let i = 0, f; f = files[i]; i++) {
@@ -90,39 +93,43 @@ const openFileOrFiles = async (extensions,multiple = false) => {
 			reader.onload = (function (file) {
 				fileName = file.name;
 				selFile = {};
-        selFile.Id = i;
+        selFile.Order = i+1
+        selFile.Id = "";
 				selFile.LastModifiedDate = file.lastModifiedDate;
+        selFile.CreatedDate = file.lastModifiedDate;
 				selFile.LastModified = file.lastModified;
 				selFile.Size = file.size;
 				selFile.Type = file.type;
 				selFile.Name = file.name;
-        selFile.IsImage = file.Type.includes("image");
-        selFile.IsText = file.Type.includes("text");
-        selFile.IsPDF = file.Type.includes("pdf");
-        selFile.IsJavascript = file.Type.includes("javascript");
-        selFile.IsHtml = file.Type.includes("html");
-        selFile.IsApplication = file.Type.includes("application");
+        selFile.IsImage = file.type.includes("image");
+        selFile.IsText = file.type.includes("text");
+        selFile.IsPDF = file.type.includes("pdf");
+        selFile.IsJavascript = file.type.includes("javascript");
+        selFile.IsHtml = file.type.includes("html");
+        selFile.IsApplication = file.type.includes("application");
         selFile.Status = "";
-        selFile.data;
-    
-				return function (e) {
-    			let fileData = e.target.result;
-		  		let ix = fileData.indexOf(K_BASE64);
-					if (ix > 0) {
-						selFile.data = fileData.substr(ix + token.length);
-						try {
-							if ( readBase64)
-								selFile.data = atob(fileData);
-							else selFile.data = fileData;
-						}
-						catch (ex) {
-							logException(ex, `Decoding base64 data JSON. for ${selFile.name}\n${ex.message} `)
-						}
+        selFile.Base64Data = "";
+        selFile.Id = "";
+        selFile.Source = "L";
 
-					}
-					else
-						selFile.data = fileData;
-          fileInfos.push(selFile);
+				return function (e) {
+          selFile.Base64Data = e.target.result;
+    			//let fileData = e.target.result;
+		  		// let ix = fileData.indexOf(K_BASE64);
+					// if (ix > 0) 
+					// 	selFile.Base64Data = fileData.substring(ix + K_BASE64.length);
+          // else
+          //   selFile.Data = fileData;
+						// try {
+						// 	if ( readBase64)
+						// 		selFile.Base64Data = atob(fileData);
+						// 	else selFile.Base64Data = fileData;
+						// }
+						// catch (ex) {
+						// 	logException(ex, `Decoding base64 data JSON. for ${selFile.name}\n${ex.message} `)
+						// }
+          //fileInfos.push(selFile);
+          loadLocalFile(selFile);
 				};
 			})(files[i]);
 
@@ -143,7 +150,7 @@ const openFileOrFiles = async (extensions,multiple = false) => {
 			else
 				reader.readAsText(files[i]);
 		}
-    return fileInfos;
+    //return fileInfos;
 	}
 
 
@@ -181,7 +188,7 @@ const openFileOrFiles = async (extensions,multiple = false) => {
 				return function (e) {
     			selFile.data = e.target.result;
           fileInfos.push(selFile);
-          croppedImage =  cropImage(selFile.data,540,540);
+          //croppedImage =  cropImage(selFile.data,540,540);
 
 				};
 			})(file);
@@ -205,3 +212,6 @@ const openFileOrFiles = async (extensions,multiple = false) => {
 		
     return fileInfos;
 	}
+
+
+  
