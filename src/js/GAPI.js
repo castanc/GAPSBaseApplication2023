@@ -9,29 +9,16 @@ var thumbNails = [];
 
 
 
-function downloadStageFiles() {
+function downloadStageFiles(folderName) {
     logDebug(downloadStageFiles.name, location.protocol);
     if (location.protocol == K_HTTPS) {
       logDebug("downloading Stage");
-      google.script.run.withSuccessHandler(loadData).withFailureHandler(failureCall).downloadStageFiles();
+      google.script.run.withSuccessHandler(loadData).withFailureHandler(failureCall).downloadStageFiles(folderName);
     }
     else if (stageData)
       loadData(stageData);
   
   }
-
-
-  function getFoldersInfo() {
-    logDebug(downloadStageFiles.name, location.protocol);
-    if (location.protocol == K_HTTPS) {
-      logDebug("downloading Stage");
-      google.script.run.withSuccessHandler(loadFolders).withFailureHandler(failureCall).getFoldersInfo();
-    }
-    else if (stageData)
-      loadData(stageData);
-  
-  }
-
 
 
 function getImages(url) {

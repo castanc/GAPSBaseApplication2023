@@ -86071,6 +86071,42 @@ let docs = [];
 let doc = {};
 let page = 0;
 
+
+function loadData(result) {
+    saveData(K_LOCAL_DOWNLOADDATA, result);
+    let ro = JSON.parse(result);
+    if (ro.Code == 0) {
+        logDebug(loadData.name, "sucess downloadData")
+        stage = [];
+        for (let i = 1; i < ro.Content.length; i++) {
+            let o = {};
+            for (let j = 0; j < ro.Content[0].length; j++) {
+                o[ro.Content[0][j]] = ro.Content[i][j];
+            }
+            o.DateLastAccess = new Date(o.DateLastAccess);
+            o.DateCreated = new Date(o.DateCreated);
+            o.Status = "";
+            o.Order = i;
+            o.IsImage = getFileType(o.Ext) == "IMAGE";
+            o.IsPDF = getFileType(o.Ext) == "PDF";
+            o.IsText = getFileType(o.Ext) == "TEXT";
+            o.Delete = false;
+            logFuncDebug(loadData.name, o);
+            stage.push(o);
+        }
+    }
+    else {
+        logDebug(loadData.name, "SERVER EXCEPTION");
+        logDebug(ro);
+    }
+    saveData("stage-objects", JSON.stringify(stage));
+    hideControl(DIV_WELCOME);
+    ixDoc = 1;
+    buildSelector();
+    editStage();
+}
+
+
 function toggleEdit() {
     dataVisible = !dataVisible;
     if (dataVisible)
@@ -86227,9 +86263,16 @@ function editDocument(order) {
         hideControl(DIV_CARDS);
         showControl(DIV_EDIT_DOCUMENT);
         //let imgHtml = `<img src="${baseUrl1}${p[0].Id}" width="540px">`;
-        let imgHtml = `<img src="${baseUrl1}${p[0].Id}" onclick="viewNext()" ondoubhleclick="viewPrev()">`;
-        logDebug(editDocument.name, imgHtml);
-        writeInnerHTML(DIV_IMAGE_EDIT, imgHtml);
+        let htmlFile = "";
+        if (p.IsImage) {
+            htmlFile = `<img src="${baseUrl1}${p[0].Id}" onclick="viewNext()" ondoubhleclick="viewPrev()">`;
+            logDebug(editDocument.name, imgHtml);
+        }
+        else
+        {
+            htmlFile = `<p>${p.FileName}</p>`
+        }
+        writeInnerHTML(DIV_IMAGE_EDIT, htmlFile);
         if (doc.Delete) {
             showControl("iconDeleted");
             hideControl("iconDelete");
@@ -86271,29 +86314,16 @@ var thumbNails = [];
 
 
 
-function downloadStageFiles() {
+function downloadStageFiles(folderName) {
     logDebug(downloadStageFiles.name, location.protocol);
     if (location.protocol == K_HTTPS) {
       logDebug("downloading Stage");
-      google.script.run.withSuccessHandler(loadData).withFailureHandler(failureCall).downloadStageFiles();
+      google.script.run.withSuccessHandler(loadData).withFailureHandler(failureCall).downloadStageFiles(folderName);
     }
     else if (stageData)
       loadData(stageData);
   
   }
-
-
-  function getFoldersInfo() {
-    logDebug(downloadStageFiles.name, location.protocol);
-    if (location.protocol == K_HTTPS) {
-      logDebug("downloading Stage");
-      google.script.run.withSuccessHandler(loadFolders).withFailureHandler(failureCall).getFoldersInfo();
-    }
-    else if (stageData)
-      loadData(stageData);
-  
-  }
-
 
 
 function getImages(url) {
@@ -86332,6 +86362,7 @@ var sheet = {};
 var baseUrl = "https://drive.google.com/file/d/";
 const baseUrl1 = "https:" + "/" + "/" + "drive.google.com/uc?export=view&id=";
 const baseUrl2 = "https:" + "/" + "/" + "drive.google.com/file/d/";
+var gdriveFolder = "";
 let ixDoc = 1;
 //https://drive.google.com/uc?id=19V4vTvoFlrjvPs6oQIrZ7yYecdoYl3rD&export=download
 //https://drive.google.com/file/d/19EMhlBFlxPiOqtSjvMJqx0AltPAlwI2p/view?usp=drivesdk
@@ -86373,43 +86404,14 @@ function paintThumbnail(file)
 
 function saveData(key, result) {
   if (saveServerData)
-    localStorage.setItem(key, result);
+  {
+    logDebug(saveData.name,key);
+    logDebug(result);
+      localStorage.setItem(key, result);
+  }
 }
 
 
-function loadData(result) {
-  saveData(K_LOCAL_DOWNLOADDATA, result);
-  let ro = JSON.parse(result);
-  if (ro.Code == 0) {
-    logDebug(loadData.name, "sucess downloadData")
-    stage = [];
-    for (let i = 1; i < ro.Content.length; i++) {
-      let o = {};
-      for (let j = 0; j < ro.Content[0].length; j++) {
-        o[ro.Content[0][j]] = ro.Content[i][j];
-      }
-      o.DateLastAccess = new Date(o.DateLastAccess);
-      o.DateCreated = new Date(o.DateCreated);
-      o.Status = "";
-      o.Order = i;
-      o.IsImage = getFileType(o.Ext) == "IMAGE";
-      o.IsPDF = getFileType(o.Ext) == "PDF";
-      o.IsText = getFileType(o.Ext) == "TEXT";
-      o.Delete = false;
-      logFuncDebug(loadData.name,o);
-      stage.push(o);
-    }
-  }
-  else {
-    logDebug(loadData.name, "SERVER EXCEPTION");
-    logDebug(ro);
-  }
-  saveData("stage-objects", JSON.stringify(stage));
-  hideControl(DIV_WELCOME);
-  ixDoc = 1;
-  buildSelector();
-  editStage();
-}
 
 
 
@@ -86472,8 +86474,8 @@ json ='<?!= getLoggedUser(); ?>';
 function userStart(){
     logDebug(userStart.name, "start app");
     if ( mobile) hideControl(ICON_HOME);
-    downloadStageFiles();
-    downloadBaseData();
+    //downloadStageFiles();
+    //downloadBaseData();
     //getFoldersInfo();
   
 
@@ -86950,6 +86952,79 @@ function failureCall(error) {
     }
     
 
+//P:\MainApps\BaseApplication2\VSN-1.0.5\src\framework\js\gdrive.js
+let driveVisible = false;
+const DIV_DRIVE = "divSelectDrive";
+const DIV_SELECT_FOLDER = "divSelectFolder";
+const DIV_FOLDER_SELECTOR  = "fldFolderSelector";
+const KEY_FOLDERS = "keyFolders";
+
+let folderName = "";
+
+
+
+function getFoldersInfo() {
+  logDebug(downloadStageFiles.name, location.protocol);
+  if (location.protocol == K_HTTPS) {
+    logDebug("downloading Stage");
+    google.script.run.withSuccessHandler(loadFolders).withFailureHandler(failureCall).downloadFoldersInfo();
+  }
+  else if (stageData)
+    loadData(stageData);
+
+}
+
+
+
+function assignFolder(val)
+{
+  folderName = val;
+  downloadStageFiles(folderName);
+}
+
+function buildSelectFolders(folders)
+{
+    let html = "";
+    let options = "";
+    for(let i=0;i<folders.length;i++)
+    {
+        options = `${options}<option value="${folders[i]}">${folders[i]}</option>`;
+    }
+    html = `<select id="fldFolderSelector" onchange="assignFolder(this.value)">${options}</select>`;
+    writeInnerHTML(DIV_SELECT_FOLDER,html);
+}
+
+function toggleDrive(){
+    driveVisible = !driveVisible;
+    if ( driveVisible)
+    {
+        showControl(DIV_DRIVE)
+    }
+    else hideControl(DIV_DRIVE);
+}
+
+
+function loadFolders(result) {
+  let folders = [];
+  saveData(KEY_FOLDERS, result);
+    let ro = JSON.parse(result);
+    if (ro.Code == 0) {
+      logDebug(loadData.name, "sucess getFolders")
+      for (let i = 0; i < ro.Content.length; i++) {
+        folders.push(ro.Content[i][0]);
+      }
+    }
+    else {
+      logDebug(loadData.name, "SERVER EXCEPTION");
+      logDebug(ro);
+    }
+    hideControl(DIV_WELCOME);
+    buildSelectFolders(folders);
+    driveVisible = true;
+    showControl(DIV_DRIVE)
+  }
+  
+
 //P:\MainApps\BaseApplication2\VSN-1.0.5\src\framework\js\getip.js
 
 var IPAddress="";
@@ -87065,56 +87140,35 @@ img.onload = function() {
 };
 }
 
-//P:\MainApps\BaseApplication2\VSN-1.0.5\src\framework\js\select-drive.js
-let driveVisible = false;
-const DIV_DRIVE = "divSelectDrive";
-const DIV_SELECT_FOLDER = "divSelectFolder";
-const DIV_FOLDER_SELECTOR  = "fldFolderSelector";
-let folders = [];
+//P:\MainApps\BaseApplication2\VSN-1.0.5\src\framework\js\modal.js
+const MODAL_CONTENT = "modalContent";
 
+//https://www.w3schools.com/howto/howto_css_modals.asp
+// Get the modal
+var modal = document.getElementById("modalPopUp");
 
+// Get the button that opens the modal
+//var btn = document.getElementById("myBtn");
 
-function buildSelectFolders()
-{
-    let html = "";
-    let options = "";
-    for(let i=0;i<folders.length;i++)
-    {
-        options = `${options}<option value="${fodlers[i]}">${folders[i]}</option>`;
-    }
-    html = `<select id=fldFolderSelector>${options}</select>`;
-    writeInnerHTML(DIV_SELECT_FOLDER,html);
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+// btn.onclick = function() {
+//   modal.style.display = "block";
+// }
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
 }
 
-function toggleDrive(){
-    driveVisible = !driveVisible;
-    if ( driveVisible)
-    {
-        showControl(DIV_DRIVE)
-    }
-    else hideControl(DIV_DRIVE);
-}
-
-
-function loadFolders(result) {
-    saveData("DRIVE_FOLDERS", result);
-    let ro = JSON.parse(result);
-    if (ro.Code == 0) {
-      logDebug(loadData.name, "sucess getFolders")
-      folders = [];
-      for (let i = 1; i < ro.Content.length; i++) {
-        folders.push(ro.Content[i][j]);
-      }
-    }
-    else {
-      logDebug(loadData.name, "SERVER EXCEPTION");
-      logDebug(ro);
-    }
-    hideControl(DIV_WELCOME);
-    buildSelectFolders();
-    toggleDrive();
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
   }
-  
+}
 
 //P:\MainApps\BaseApplication2\VSN-1.0.5\src\framework\js\ui.js
 function showControl(ctl, scrollToTop = true) {

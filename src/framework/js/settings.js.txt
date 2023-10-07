@@ -1,0 +1,43 @@
+const FLD_GOOGLE_DRIVE_FOLDER = "GoogleDriveFolder";
+const KEY_CONFIG ="config";
+const DIV_SETTINGS = "diSettings";
+let settingsVisible = false;
+let config = {};
+
+
+function toggleSettings()
+{
+    settingsVisible = !settingsVisible;
+    if ( settingsVisible)
+        showCards(DIV_SETTINGS);
+    else
+        hideControl(DIV_SETTINGS);
+}
+
+
+function loadConfig()
+{
+    json = localStorage.getItem(KEY_CONFIG);
+    if ( json )
+    {
+        config = JSON.parse(json);
+    }
+    else
+    {
+        config = {};
+        config.User = UserEmail;
+        config.IPAddress = IPAddress;
+        config.GoogleDriveFolder = "";
+        config.UserRegion = navigator.language;
+    }
+
+    return config;
+
+
+    function saveConfig()
+    {
+        json = JSON.stringify(config);
+        localStorage.setItem(KEY_CONFIG,json);
+    }
+
+}

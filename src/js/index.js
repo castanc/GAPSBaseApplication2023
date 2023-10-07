@@ -3,6 +3,7 @@ var sheet = {};
 var baseUrl = "https://drive.google.com/file/d/";
 const baseUrl1 = "https:" + "/" + "/" + "drive.google.com/uc?export=view&id=";
 const baseUrl2 = "https:" + "/" + "/" + "drive.google.com/file/d/";
+var gdriveFolder = "";
 let ixDoc = 1;
 //https://drive.google.com/uc?id=19V4vTvoFlrjvPs6oQIrZ7yYecdoYl3rD&export=download
 //https://drive.google.com/file/d/19EMhlBFlxPiOqtSjvMJqx0AltPAlwI2p/view?usp=drivesdk
@@ -44,43 +45,14 @@ function paintThumbnail(file)
 
 function saveData(key, result) {
   if (saveServerData)
-    localStorage.setItem(key, result);
+  {
+    logDebug(saveData.name,key);
+    logDebug(result);
+      localStorage.setItem(key, result);
+  }
 }
 
 
-function loadData(result) {
-  saveData(K_LOCAL_DOWNLOADDATA, result);
-  let ro = JSON.parse(result);
-  if (ro.Code == 0) {
-    logDebug(loadData.name, "sucess downloadData")
-    stage = [];
-    for (let i = 1; i < ro.Content.length; i++) {
-      let o = {};
-      for (let j = 0; j < ro.Content[0].length; j++) {
-        o[ro.Content[0][j]] = ro.Content[i][j];
-      }
-      o.DateLastAccess = new Date(o.DateLastAccess);
-      o.DateCreated = new Date(o.DateCreated);
-      o.Status = "";
-      o.Order = i;
-      o.IsImage = getFileType(o.Ext) == "IMAGE";
-      o.IsPDF = getFileType(o.Ext) == "PDF";
-      o.IsText = getFileType(o.Ext) == "TEXT";
-      o.Delete = false;
-      logFuncDebug(loadData.name,o);
-      stage.push(o);
-    }
-  }
-  else {
-    logDebug(loadData.name, "SERVER EXCEPTION");
-    logDebug(ro);
-  }
-  saveData("stage-objects", JSON.stringify(stage));
-  hideControl(DIV_WELCOME);
-  ixDoc = 1;
-  buildSelector();
-  editStage();
-}
 
 
 

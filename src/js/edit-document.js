@@ -3,6 +3,42 @@ let docs = [];
 let doc = {};
 let page = 0;
 
+
+function loadData(result) {
+    saveData(K_LOCAL_DOWNLOADDATA, result);
+    let ro = JSON.parse(result);
+    if (ro.Code == 0) {
+        logDebug(loadData.name, "sucess downloadData")
+        stage = [];
+        for (let i = 1; i < ro.Content.length; i++) {
+            let o = {};
+            for (let j = 0; j < ro.Content[0].length; j++) {
+                o[ro.Content[0][j]] = ro.Content[i][j];
+            }
+            o.DateLastAccess = new Date(o.DateLastAccess);
+            o.DateCreated = new Date(o.DateCreated);
+            o.Status = "";
+            o.Order = i;
+            o.IsImage = getFileType(o.Ext) == "IMAGE";
+            o.IsPDF = getFileType(o.Ext) == "PDF";
+            o.IsText = getFileType(o.Ext) == "TEXT";
+            o.Delete = false;
+            logFuncDebug(loadData.name, o);
+            stage.push(o);
+        }
+    }
+    else {
+        logDebug(loadData.name, "SERVER EXCEPTION");
+        logDebug(ro);
+    }
+    saveData("stage-objects", JSON.stringify(stage));
+    hideControl(DIV_WELCOME);
+    ixDoc = 1;
+    buildSelector();
+    editStage();
+}
+
+
 function toggleEdit() {
     dataVisible = !dataVisible;
     if (dataVisible)
@@ -159,9 +195,16 @@ function editDocument(order) {
         hideControl(DIV_CARDS);
         showControl(DIV_EDIT_DOCUMENT);
         //let imgHtml = `<img src="${baseUrl1}${p[0].Id}" width="540px">`;
-        let imgHtml = `<img src="${baseUrl1}${p[0].Id}" onclick="viewNext()" ondoubhleclick="viewPrev()">`;
-        logDebug(editDocument.name, imgHtml);
-        writeInnerHTML(DIV_IMAGE_EDIT, imgHtml);
+        let htmlFile = "";
+        if (p.IsImage) {
+            htmlFile = `<img src="${baseUrl1}${p[0].Id}" onclick="viewNext()" ondoubhleclick="viewPrev()">`;
+            logDebug(editDocument.name, imgHtml);
+        }
+        else
+        {
+            htmlFile = `<p>${p.FileName}</p>`
+        }
+        writeInnerHTML(DIV_IMAGE_EDIT, htmlFile);
         if (doc.Delete) {
             showControl("iconDeleted");
             hideControl("iconDelete");
