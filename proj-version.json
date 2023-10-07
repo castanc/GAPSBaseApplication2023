@@ -2,8 +2,8 @@
   "Major": 1,
   "Minor": 0,
   "Release": 5,
-  "Build": 0,
-  "BuildDate": "0001-01-01T00:00:00",
+  "Build": 89,
+  "BuildDate": "2023-10-07T07:18:46.9767399-03:00",
   "AppName": "BaseApplication2",
   "SourcePath": "P:\\MainApps\\BaseApplication2\\VSN-1.0.5",
   "PrimaryPath": "P:\\MainApps\\BaseApplication2",
@@ -12,6 +12,6 @@
   "RootPath": "P:",
   "IsLauncher": false,
   "BackupFolder": "P:\\Backups",
-  "FullVersionString": "VSN-1.0.5.0",
+  "FullVersionString": "VSN-1.0.5.89",
   "ReleaseString": "VSN-1.0.5"
 }

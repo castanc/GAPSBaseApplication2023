@@ -21,6 +21,18 @@ function downloadStageFiles() {
   }
 
 
+  function getFoldersInfo() {
+    logDebug(downloadStageFiles.name, location.protocol);
+    if (location.protocol == K_HTTPS) {
+      logDebug("downloading Stage");
+      google.script.run.withSuccessHandler(loadFolders).withFailureHandler(failureCall).getFoldersInfo();
+    }
+    else if (stageData)
+      loadData(stageData);
+  
+  }
+
+
 
 function getImages(url) {
     logFuncDebug(getImages.name, url);

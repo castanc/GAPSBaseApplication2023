@@ -10,9 +10,9 @@ let ixDoc = 1;
 
 
 
-function home() {
-
-console.log("home");
+function home() 
+{
+  scrollTo(DIV_MESSAGES);
 
 }
 
@@ -48,7 +48,6 @@ function saveData(key, result) {
 }
 
 
-
 function loadData(result) {
   saveData(K_LOCAL_DOWNLOADDATA, result);
   let ro = JSON.parse(result);
@@ -60,6 +59,8 @@ function loadData(result) {
       for (let j = 0; j < ro.Content[0].length; j++) {
         o[ro.Content[0][j]] = ro.Content[i][j];
       }
+      o.DateLastAccess = new Date(o.DateLastAccess);
+      o.DateCreated = new Date(o.DateCreated);
       o.Status = "";
       o.Order = i;
       o.IsImage = getFileType(o.Ext) == "IMAGE";
@@ -77,19 +78,11 @@ function loadData(result) {
   saveData("stage-objects", JSON.stringify(stage));
   hideControl(DIV_WELCOME);
   ixDoc = 1;
+  buildSelector();
   editStage();
 }
 
-function editStage(){
-  if (!mobile)
-    showCards(stage);
-  else
-  {
-    dataVisible = true;
-    editDocument(ixDoc);
-  }
 
-}
 
 function createThumbNails() {
   thumbNails = [];

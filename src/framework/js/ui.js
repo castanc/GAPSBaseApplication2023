@@ -3,7 +3,7 @@ function showControl(ctl, scrollToTop = true) {
 	if (control) {
 		control.style.display = "block";
 		if (scrollToTop == true)
-			control.scrollIntoView(true);
+			scrollTo("top");
 	}
 }
 
@@ -64,6 +64,47 @@ function getMB(size) {
 	return megas;
 
 }
+
+function setDateValue(ctl, dt)
+{
+	let field = document.getElementById(ctl);
+	if ( field)
+		field.valueAsDate = dt;
+}
+
+function setTimeValue(ctl,dt)
+{
+	let field = document.getElementById(ctl);
+	if ( field)
+	{
+		let t = new Date(0,0,0,dt.getHours,dt.getMinutes,dt.getSeconds);
+		field.valueAsDate = t;
+	}
+
+
+}
+
+function setValue(ctl,val)
+{
+	let field = document.getElementById(ctl);
+	if ( field)
+	{
+		field.value = val;
+	}
+}
+
+function getValue(ctl,val)
+{
+	let field = document.getElementById(ctl);
+	if ( field)
+	{
+		return field.value;
+	}
+	return undefined;
+}
+
+
+
 
 function setFocus(ctlid) {
 	let ctl = document.getElementById(ctlid);

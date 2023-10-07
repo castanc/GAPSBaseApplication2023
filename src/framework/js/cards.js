@@ -1,5 +1,5 @@
-const thumbWidth = 240;
-const thumbHeight = 240;
+const thumbWidth = 320;
+const thumbHeight = 320;
 
 function showCards(files, filter = "") {
     showControl(DIV_OPTIONS);
@@ -35,7 +35,7 @@ function showCards(files, filter = "") {
   function paintCard(p, i) {
     let card = "";
     let dimensions = "";
-    let topbtn = `<i class="fa fa-home" onclick="showControl('top')" title="Inicio"></i>`;
+    let topbtn = `<i class="fa fa-home" onclick="scrollTo('top')" title="Inicio"></i>`;
     let btnEdit = `<i class="fas fa-edit" onclick="editDocument(${p.Order})" title="Edit"></i>`;
     let btnBack = ""; //`<i class="fas fa-arrow-alt-circle-left" onclick="closeQueryReservas()" title="Continuar Reservas"></i>`;;
 
@@ -66,7 +66,7 @@ function showCards(files, filter = "") {
                       <p class="sub-tiulo">${megas}; ${confirm}</p>
                     <h3>${dateString(new Date(p.DateLastAccess))}</h3>
             <div class="row">
-              ${btnEdit}
+              ${topbtn}${btnEdit}
             </div>
             <div id="msg_${p.RowId}" class="row">
             </div>

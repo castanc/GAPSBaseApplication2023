@@ -25,10 +25,12 @@ const FLD_DESTINO = "fldDestino";
 const FLD_BENEFICIARIOS = "fldBeneficiarios";
 const FLD_MONEDAS = "fldMonedas";
 const FLD_OCRTEXT = "fldOCRText";
+const FLD_SELECTOR = "fldSelector";
 
 const K_HTTPS = "https:";
 const K_BASE64 = "base64";
 const ICON_DEBUG = "iconDebug";
+const ICON_HOME = "iconHome";
 
 
 const K_LOCAL_DOWNLOADDATA = "downloadData";
