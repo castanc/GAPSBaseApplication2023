@@ -86942,7 +86942,8 @@ const openFileOrFiles = async (extensions,multiple = false) => {
 						// 	logException(ex, `Decoding base64 data JSON. for ${selFile.name}\n${ex.message} `)
 						// }
           //fileInfos.push(selFile);
-          loadLocalFile(selFile);
+          if ( selFile.IsImage)
+            loadLocalFile(selFile);
 				};
 			})(files[i]);
 
